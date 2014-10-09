@@ -10,25 +10,31 @@ function badRequest(res, message) {
 }
 
 // Register routes
-router.get('/:country/today', function(req, res){
+router.get('/:country/today', function(req, res) {
   res.json(service.checkDate(req.params.country, new Date()));
 });
 
-router.get('/:country/yesterday', function(req, res){
+router.get('/:country/yesterday', function(req, res) {
   var date = new Date();
   date.setDate(date.getDate() - 1);
   res.json(service.checkDate(req.params.country, date));
 });
 
-router.get('/:country/tomorrow', function(req, res){
+router.get('/:country/tomorrow', function(req, res) {
   var date = new Date();
   date.setDate(date.getDate() + 1);
   res.json(service.checkDate(req.params.country, date));
 });
 
-router.get('/:country/:year/:month/:day', function(req, res){
+router.get('/:country/:year/:month/:day', function(req, res) {
   var date = new Date(req.params.year, req.params.month - 1, req.params.day);
   res.json(service.checkDate(req.params.country, date));
+});
+
+router.get('/', function(req, res) {
+  var routes = router.stack.map(function(o){return o.route.path});
+  var countries = service.listCountries();
+  res.json({routes: routes, countries: countries});
 });
 
 // Param validation
@@ -61,8 +67,6 @@ router.param('day', function(req, res, next, day) {
 
 app.use('/', router);
 
-// TODO display list of routes at '/'
-
-var server = app.listen(3000, function() {
+var server = app.listen((process.env.PORT || 3000), function() {
   console.log('Listening on port %d', server.address().port);
 });

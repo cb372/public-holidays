@@ -42,3 +42,6 @@ exports.checkDate = function(country, date) {
   };
 };
 
+exports.listCountries = function() {
+  return Object.keys(holidaysByCountry);
+};
