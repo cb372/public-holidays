@@ -1,0 +1,11 @@
+{
+  "name": "public-holidays",
+  "description": "A dead-simple API server for looking up public holidays in Japan and elsewhere",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "4.x",
+    "js-yaml": "3.2.2",
+    "dateformat": "1.0.8"
+  }
+}
